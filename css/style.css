@@ -11884,10 +11884,12 @@ h5,
 
   #sidebar.active {
     margin-left: 0;
+    overflow: scroll;
   }
 
   #sidebar .custom-menu {
-    margin-right: -40px !important;
+    margin-right: 0px !important;
+    z-index: 1;
     top: 10px !important;
   }
 }
