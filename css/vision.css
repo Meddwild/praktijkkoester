@@ -1,114 +1,66 @@
-.page-section {
-  margin-bottom: 2rem;
-}
+/* Styles specific to the vision page (vision.html) */
 
-.cta {
-  padding-top: 5rem;
-  padding-bottom: 5rem;
-}
-
-.cta .cta-inner {
-  position: relative;
-  padding: 3rem;
-  margin: 0.5rem;
-}
-
-.cta .cta-inner:before {
-  border-radius: 0.5rem;
-  content: "";
-  position: absolute;
-  top: -0.5rem;
-  bottom: -0.5rem;
-  left: -0.5rem;
-  right: -0.5rem;
-  border: 0.25rem solid rgba(255, 255, 255, 0.85);
-  z-index: -1;
-}
-
-.row {
-  --bs-gutter-x: 1.5rem;
-  --bs-gutter-y: 0;
+.flex-container {
   display: flex;
-  flex-wrap: wrap;
-  margin-top: calc(-1 * var(--bs-gutter-y));
-  margin-right: calc(-0.5 * var(--bs-gutter-x));
-  margin-left: calc(-0.5 * var(--bs-gutter-x));
+  justify-content: center;
+  padding: 2rem;
 }
 
-.row>* {
-  flex-shrink: 0;
-  width: 100%;
-  max-width: 100%;
-  padding-right: calc(var(--bs-gutter-x) * 0.5);
-  padding-left: calc(var(--bs-gutter-x) * 0.5);
-  margin-top: var(--bs-gutter-y);
-}
-
-.col-xl-9 {
-  flex: 0 0 auto;
-  width: 75%;
-}
-
-.bg-faded {
-  background-color: rgba(237, 231, 202, 0.4);
-  border-radius: 25px !important;
-}
-
-address {
-  margin-bottom: 1rem;
-  font-style: normal;
-  line-height: inherit;
-}
-
-.address strong {
-  font-size: 1.2rem;
-}
-
-.list-unstyled {
-  padding-left: 0;
-  list-style: none;
-}
-
-.list-hours {
-  font-size: 0.9rem;
-}
-
-.list-hours .list-hours-item {
-  border-bottom: 1px solid rgba(230, 167, 86, 0.5);
-  padding-bottom: 0.25rem;
-  margin-bottom: 1rem;
-  font-style: italic;
-}
-
-.list-hours .list-hours-item.today {
-  font-weight: bold;
-  color: #e6a756;
-}
-
-@media (min-width: 992px) {
-  .list-hours {
-    width: 50%;
-    font-size: 1.1rem;
-  }
-}
-
-@media (max-width: 992px) {
-  .page-section {
-    margin-top: 0.5rem;
-    margin-bottom: 2rem;
-  }
-
-  .col-xl-9 {
-    width: 100%;
-  }
-}
-
-.d-flex {
-  display: flex !important;
-}
-
-.locationFrame {
-  display: block;
+.flex-child.content {
+  max-width: 800px;
+  text-align: left;
+  line-height: 1.6;
   margin: auto;
-  width: 75%;
+}
+
+.flex-child.content h2,
+.flex-child.content h3 {
+  text-align: center;
+}
+
+/* blockquote formatting */
+.flex-child.content blockquote {
+  font-style: italic;
+  margin: 1.5rem auto;
+  padding-left: 1rem;
+  border-left: 4px solid #e6a756;
+  color: #555;
+}
+
+.flex-child.content blockquote footer {
+  text-align: right;
+  font-style: normal;
+  margin-top: 0.5rem;
+}
+
+.flex-child.content p {
+  margin-bottom: 1rem;
+}
+
+/* mobile adjustments */
+@media (max-width: 768px) {
+  .flex-container {
+    flex-direction: column;
+    padding: 1rem;
+    /* remove fixed height/margins inherited from mystyle.css so content can expand */
+    height: auto !important;
+    margin-top: 0 !important;
+    margin-left: 30px !important;
+    margin-right: 0 !important;
+  }
+
+  .flex-child.content {
+    max-width: 100%;
+    padding: 0 1rem;
+    font-size: 1.05rem;
+    line-height: 1.8;
+  }
+
+  .flex-child.content h2 {
+    font-size: 1.75rem;
+  }
+
+  .flex-child.content h3 {
+    font-size: 1.5rem;
+  }
 }

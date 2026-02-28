@@ -37,6 +37,7 @@ img {
     flex-direction: column;
     height: auto;
     margin-top: 5%;
+    margin-left: 75px;
   }
 
   .custom-menu {
