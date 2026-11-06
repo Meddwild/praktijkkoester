@@ -1,0 +1,477 @@
+/* Praktijk Koester - site styles (loaded after Bootstrap/theme in style.css) */
+
+:root {
+  --sage: #6f7a69;
+  --accent: #e6a756;
+  --sidebar-width: 280px;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-size: 17px;
+  color: #5f5f5f;
+  -webkit-text-size-adjust: 100%;
+}
+
+body.nav-open {
+  overflow: hidden;
+}
+
+/* ---------- Layout ---------- */
+
+.wrapper {
+  display: flex;
+  min-height: 100vh;
+}
+
+.page {
+  position: relative;
+  z-index: 0;
+  flex: 1;
+  min-width: 0;
+  padding: 3rem 2rem;
+}
+
+/* Logo watermark: fixed to the visible content area (right of the sidebar,
+   below the mobile top bar) so it stays centered there while scrolling */
+.page::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: var(--sidebar-width);
+  z-index: -1;
+  pointer-events: none;
+  /* The backdrop is very pale; layering it twice with multiply darkens the logo
+     lines while white stays white. Add a third url() to make it stronger. */
+  background: url(../img/backdrop.jpeg) no-repeat center / contain,
+    url(../img/backdrop.jpeg) no-repeat center / contain;
+  background-blend-mode: multiply;
+  transition: left 0.3s;
+}
+
+body.sidebar-collapsed .page::before {
+  left: 0;
+}
+
+.page-inner {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Two columns: text + photo (Welkom / Over mij) */
+.page-split {
+  display: flex;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-split > * {
+  flex: 1;
+}
+
+/* Body text is left-aligned on every page; page titles stay centered */
+.content,
+.text-page {
+  text-align: left;
+  line-height: 1.7;
+}
+
+.content h2,
+.content h3,
+.text-page h2,
+.text-page h3 {
+  text-align: center;
+}
+
+.subheading {
+  margin: 1.75rem 0 0.5rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #000;
+}
+
+/* Small photos in a row (Welkom); they shrink to fit on phones */
+.image-stack {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding-top: 2rem;
+}
+
+.image-stack img {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 240px;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Phones: stack the photos so they can be shown larger */
+@media (max-width: 575.98px) {
+  .image-stack {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .image-stack img {
+    flex: none;
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+.portrait {
+  display: block;
+  width: 80%;
+  max-width: 343px;
+  height: auto;
+  margin: 3rem auto 0;
+}
+
+/* ---------- Sidebar ---------- */
+
+#sidebar {
+  flex: 0 0 var(--sidebar-width);
+  width: var(--sidebar-width);
+  background: var(--sage);
+  color: #fff;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  transition: margin-left 0.3s, transform 0.3s;
+  z-index: 1030;
+}
+
+#sidebar .logo {
+  display: block;
+  height: 360px;
+  background: url(../img/logo.jpeg) no-repeat center / cover;
+}
+
+#sidebar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#sidebar ul li a {
+  display: block;
+  padding: 15px 30px;
+  font-size: 17px;
+  color: rgba(255, 255, 255, 0.7);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+#sidebar ul li a:hover,
+#sidebar ul li a:focus-visible,
+#sidebar ul li.active > a {
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+#sidebar ul li a .fa {
+  width: 1.25em;
+  margin-right: 0.75rem;
+  text-align: center;
+}
+
+.sidebar-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: var(--sage);
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.sidebar-toggle:focus-visible {
+  outline: 2px solid var(--accent) !important;
+  outline-offset: 2px;
+}
+
+/* Mobile top bar: hidden on desktop */
+.topbar {
+  display: none;
+}
+
+.sidebar-backdrop {
+  display: none;
+}
+
+/* Desktop: sidebar can be collapsed out of the way */
+@media (min-width: 992px) {
+  .sidebar-toggle-desktop {
+    position: fixed;
+    top: 20px;
+    left: calc(var(--sidebar-width) - 22px);
+    transition: left 0.3s;
+    z-index: 1031;
+  }
+
+  .sidebar-toggle-desktop .fa-bars::before {
+    content: "\f053"; /* chevron-left */
+  }
+
+  body.sidebar-collapsed #sidebar {
+    margin-left: calc(-1 * var(--sidebar-width));
+  }
+
+  body.sidebar-collapsed .sidebar-toggle-desktop {
+    left: 10px;
+  }
+
+  body.sidebar-collapsed .sidebar-toggle-desktop .fa-bars::before {
+    content: "\f054"; /* chevron-right */
+  }
+
+  .page-split .content {
+    padding-top: 2rem;
+  }
+}
+
+/* Tablet and phone: off-canvas drawer + top bar */
+@media (max-width: 991.98px) {
+  .sidebar-toggle-desktop {
+    display: none;
+  }
+
+  .topbar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+    height: 56px;
+    padding: 0 0.75rem;
+    background: var(--sage);
+    color: #fff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+  }
+
+  .topbar-title {
+    font-size: 18px;
+    letter-spacing: 0.04em;
+    color: #fff;
+  }
+
+  .topbar-title:hover {
+    color: #fff;
+  }
+
+  .wrapper {
+    min-height: calc(100vh - 56px);
+  }
+
+  #sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    height: auto;
+    width: min(var(--sidebar-width), 85vw);
+    transform: translateX(-100%);
+    visibility: hidden;
+    transition: transform 0.3s, visibility 0s 0.3s;
+  }
+
+  body.nav-open #sidebar {
+    transform: none;
+    visibility: visible;
+    transition: transform 0.3s;
+    box-shadow: 2px 0 12px rgba(0, 0, 0, 0.25);
+  }
+
+  #sidebar .logo {
+    height: clamp(180px, 35vh, 320px);
+  }
+
+  .sidebar-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 1025;
+    background: rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+
+  body.nav-open .sidebar-backdrop {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .page {
+    padding: 1.5rem 1rem 2.5rem;
+  }
+
+  .page::before {
+    top: 56px; /* below the top bar */
+    left: 0;
+    /* The image has wide empty margins; oversize it so the logo itself is legible */
+    background-size: 130% auto, 130% auto;
+  }
+
+  .page-split {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .portrait {
+    margin-top: 1.5rem;
+    max-width: 260px;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+  }
+
+  h3 {
+    font-size: 1.3rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #sidebar,
+  .sidebar-toggle,
+  .sidebar-backdrop {
+    transition: none !important;
+  }
+}
+
+/* ---------- Inline photos & quotes (Welkom, Tarieven) ---------- */
+
+/* Keep floated photos inside the text column */
+.text-page {
+  display: flow-root;
+}
+
+/* Small mood photos the text wraps around (placeholders from picsum.photos) */
+.inline-photo {
+  width: 40%;
+  max-width: 280px;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 8px;
+  margin: 0.4rem 0 1rem;
+}
+
+.inline-photo.right {
+  float: right;
+  margin-left: 1.5rem;
+}
+
+.inline-photo.left {
+  float: left;
+  margin-right: 1.5rem;
+}
+
+/* Phones: too narrow to wrap text, so show the photo full width */
+@media (max-width: 575.98px) {
+  .inline-photo.left,
+  .inline-photo.right {
+    float: none;
+    display: block;
+    width: 100%;
+    max-width: none;
+    margin: 0.5rem 0 1.25rem;
+  }
+}
+
+blockquote {
+  clear: both;
+  font-style: italic;
+  margin: 1.5rem auto;
+  padding-left: 1rem;
+  border-left: 4px solid var(--accent);
+  color: #555;
+}
+
+blockquote footer {
+  text-align: right;
+  font-style: normal;
+  margin-top: 0.5rem;
+}
+
+/* ---------- Tarieven / Contact ---------- */
+
+.list-hours {
+  font-size: 1.05rem;
+  padding: 0;
+  list-style: none;
+}
+
+.list-hours .list-hours-item {
+  display: flex;
+  gap: 1rem;
+  border-bottom: 1px solid rgba(230, 167, 86, 0.5);
+  padding-bottom: 0.25rem;
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+.list-hours .list-hours-item span {
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+/* Footnote under a rate list, e.g. "* Prijs afhankelijk van ..." */
+.list-hours-note {
+  margin-top: -0.25rem;
+  font-size: 0.9rem;
+  font-style: italic;
+  color: #777;
+}
+
+@media (min-width: 992px) {
+  .list-hours,
+  .list-hours-note {
+    width: 60%;
+  }
+
+  .list-hours {
+    font-size: 1.15rem;
+  }
+}
+
+.contact-card {
+  position: relative;
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+
+.contact-card .address strong {
+  font-size: 1.2rem;
+}
+
+.contact-card a {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 991.98px) {
+  .contact-card {
+    margin: 0.5rem auto;
+    padding: 2rem 1rem;
+  }
+}
